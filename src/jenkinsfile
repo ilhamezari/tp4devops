@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Cloning Git') {
             steps {
-                git 'https://github.com/ilhamez/tp4devops'
+                git 'https://github.com/ilhamezari/tp4devops'
             }
         }
 
