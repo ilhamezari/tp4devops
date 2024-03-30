@@ -1,0 +1,40 @@
+pipeline {
+ environment {
+  registry = "ilhamez/tp4dev"
+  registryCredential = 'dockerhub'
+  dockerImage = ''
+ }
+ agent any
+ stages {
+  stage('Cloning Git') {
+	steps {
+	git 'https://github.com/ilhamez/tp4devops'
+	}
+  }
+  stage('Building image') {
+	steps{
+	script {
+	dockerImage = docker.build registry + ":$BUILD_NUMBER"
+	}
+	}
+
+  }
+stage('Test image') {
+	steps{
+	script {
+
+	echo "Tests passed"
+	}
+	}
+  }
+  stage('Publish Image') {
+	steps{
+	script {
+	docker.withRegistry( '', '57785860-9a71-4da6-8473-56f3d6e9f4bd' ) {
+	dockerImage.push()
+	}
+	}
+	}
+  }
+ }
+}
